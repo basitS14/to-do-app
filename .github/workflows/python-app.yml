@@ -35,8 +35,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Frontend Compilation
       run: |
-      # check for syntax errors in js code
-        cd frontend
+        cd ./frontend
         find . -name ".js" -exec node --check {} + 
        
     # - name: Test with pytest
@@ -51,7 +50,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Leaks Scan
+      - name: Leaks Scan Setup
         uses: gitleaks/gitleaks-action@v3
         run: |
           gitleaks detect --source ./frontend --exit-code 1
