@@ -52,6 +52,8 @@ jobs:
 
       - name: Leaks Scan Setup
         uses: gitleaks/gitleaks-action@v3
+      
+      - name : Leaks Scan
         run: |
           gitleaks detect --source ./frontend --exit-code 1
           gitleaks detect --source ./backend --exit-code 1
