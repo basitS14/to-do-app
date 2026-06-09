@@ -1,0 +1,47 @@
+services:
+  todo-app:
+    container_name: todo-app
+    build: .
+    depends_on:
+      - todo-pgdata
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+    networks:
+      - todo-app
+      - todo-db
+    
+  todo-pgdata:
+    container_name: todo-pgdata
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - todo-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  todo-nginx:
+    container_name: todo-nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    networks:
+      - todo-app
+    ports:
+      - "8000:80"
+
+    
+networks:
+  todo-db:
+    name: "todo-db"
+  todo-app:
+    name: "todo-app"
+
+volumes:
+  pgdata:
+    name: "pgdata"
+
+  
