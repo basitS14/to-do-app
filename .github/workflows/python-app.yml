@@ -34,10 +34,9 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name : Frontend Compilation
+    - name: Frontend Compilation
       run: |
-      # check for syntax errors in js code
-        cd ./frontend
+        cd frontend
         find . -name ".js" -exec node --check {} + 
        
     # - name: Test with pytest
@@ -53,7 +52,7 @@ jobs:
 
       - name: Leaks Scan
         uses: gitleaks/gitleaks-action@v3
-        run : |
+        run: |
           gitleaks detect --source ./frontend --exit-code 1
           gitleaks detect --source ./backend --exit-code 1
         
